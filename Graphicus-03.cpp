@@ -9,11 +9,11 @@
 ********/
 
 #include <QApplication>
-#include "monInterface.h"
+#include "mainInterface.h"
 
 int main( int argc, char ** argv )
 {
 	QApplication app(argc, argv);
-	MonInterface gui("Graphicus-03");
+	MainInterface gui("Graphicus-03");
 	return app.exec();
 }

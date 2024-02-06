@@ -30,12 +30,12 @@
     <ClCompile Include="Graphicus-03.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="monInterface.cpp">
+    <ClCompile Include="mainInterface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="monInterface.h">
+    <ClInclude Include="mainInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="headers\caneva.h">

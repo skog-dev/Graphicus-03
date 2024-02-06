@@ -143,13 +143,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Graphicus-03.cpp" />
-    <ClCompile Include="monInterface.cpp" />
+    <ClCompile Include="mainInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="headers\caneva.h" />
     <ClInclude Include="headers\layer.h" />
     <ClInclude Include="headers\vector.h" />
-    <ClInclude Include="monInterface.h" />
+    <ClInclude Include="mainInterface.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
