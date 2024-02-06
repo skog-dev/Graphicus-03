@@ -52,6 +52,9 @@ public:
 	void formeSuivante();
 	void formeDerniere();
 
+private:
+	Caneva caneva;
+
 };
 
 #endif // MONINTERFACE_H

@@ -9,73 +9,30 @@ class Vector
 public:
     Vector(int c = 2);
     ~Vector();
-    
+
     int getCapacity();
     int getSize();
-    
+
     void doubleSize();
     void purge();
-    
+
     bool isEmpty();
-    
-    void copyList(O **element, O **list);
-    void printTo(std::ostream &s);
-    
-    O *getElement(int index);
-    O *removeElement(int index);
-    bool addElement(O *element);
 
-    O *operator[](int index);
-    bool operator+=(O *element);
+    void copyList(O** element, O** list);
+    void printTo(std::ostream& s);
 
-    friend std::ostream& operator<<(std::ostream &s, Vector<O> &vector) {
-        vector.printTo(s);
-        return s;
-    }
+    O* getElement(int index);
+    O* removeElement(int index);
+    bool addElement(O* element);
 
-    friend std::ofstream& operator<<(std::ofstream &s, Vector<O> &vector) {
-        vector.printTo(s);
-        return s;
-    }
+    O* operator[](int index);
+    bool operator+=(O* element);
 
-    friend std::ostringstream& operator<<(std::ostringstream &s, Vector<O> &vector) {
-        vector.printTo(s);
-        return s;
-    }
-
-
-    friend std::istream& operator>>(std::istream &s, Vector<O> &vector) {
-        for (int i = 0; i < vector.capacity; i++) {
-            O *element;
-            s >> element;
-            vector.addElement(element);
-        }
-        return s;
-    }
-
-    friend std::ifstream& operator>>(std::ifstream &s, Vector<O> &vector) {
-        for (int i = 0; i < vector.capacity; i++) {
-            O *element;
-            s >> element;
-            vector.addElement(element);
-        }
-        return s;
-    }
-
-    friend std::istringstream& operator>>(std::istringstream &s, Vector<O> &vector) {
-        for (int i = 0; i < vector.capacity; i++) {
-            O *element;
-            s >> element;
-            vector.addElement(element);
-        }
-        return s;
-    }
-
-    void operator++(); 
+    void operator++();
     void operator--();
 
 private:
-    O **list;
+    O** list;
     int size;
     int capacity;
     int current = 0;
@@ -87,12 +44,12 @@ Vector<O>::Vector(int c)
     capacity = c;
     size = 0;
 
-    list = new O *[capacity];
+    list = new O * [capacity];
     for (int i = 0; i < capacity; i++) { list[i] = nullptr; }
 }
 
 template <class O>
-Vector<O>::~Vector() { 
+Vector<O>::~Vector() {
     for (int i = 0; i < capacity; i++) { delete list[i]; }
     delete list;
 }
@@ -106,7 +63,7 @@ int Vector<O>::getSize() { return size; }
 template <class O>
 void Vector<O>::doubleSize()
 {
-    O **temp_list = new O *[capacity * 2];
+    O** temp_list = new O * [capacity * 2];
 
     copyList(list, temp_list);
 
@@ -114,7 +71,7 @@ void Vector<O>::doubleSize()
 
     delete list;
     list = temp_list;
-    
+
 }
 
 template <class O>
@@ -137,10 +94,10 @@ bool Vector<O>::isEmpty()
 }
 
 template <class O>
-void Vector<O>::copyList(O **source, O **destination)
+void Vector<O>::copyList(O** source, O** destination)
 {
-    
-    for (int i = 0; i < capacity; i++) { 
+
+    for (int i = 0; i < capacity; i++) {
         destination[i] = source[i];
     }
 
@@ -148,7 +105,7 @@ void Vector<O>::copyList(O **source, O **destination)
 }
 
 template <class O>
-void Vector<O>::printTo(std::ostream &s)
+void Vector<O>::printTo(std::ostream& s)
 {
     for (int i = 0; i < capacity; i++)
     {
@@ -158,22 +115,22 @@ void Vector<O>::printTo(std::ostream &s)
 }
 
 template <class O>
-O *Vector<O>::getElement(int index)
+O* Vector<O>::getElement(int index)
 {
     if (list[index] == nullptr || index < 0 || index > capacity - 1) { return nullptr; }
     return list[index];
 }
 
 template <class O>
-O *Vector<O>::removeElement(int index)
+O* Vector<O>::removeElement(int index)
 {
     if (index < 0 || index > capacity - 1) { return nullptr; }
 
-    O *element = list[index];
+    O* element = list[index];
 
     list[index] = nullptr;
 
-    O **temp_list = new O *[capacity];
+    O** temp_list = new O * [capacity];
 
     int cnt = 0;
 
@@ -193,7 +150,7 @@ O *Vector<O>::removeElement(int index)
 }
 
 template <class O>
-bool Vector<O>::addElement(O *element)
+bool Vector<O>::addElement(O* element)
 {
     if (size == capacity) { doubleSize(); }
 
@@ -204,14 +161,14 @@ bool Vector<O>::addElement(O *element)
 }
 
 template <class O>
-O *Vector<O>::operator[](int index)
+O* Vector<O>::operator[](int index)
 {
     if (list[index] == nullptr || index < 0 || index > capacity - 1) { return nullptr; }
     return list[index];
 }
 
 template <class O>
-bool Vector<O>::operator+=(O *element)
+bool Vector<O>::operator+=(O* element)
 {
     if (size == capacity) { doubleSize(); }
 
@@ -219,6 +176,54 @@ bool Vector<O>::operator+=(O *element)
     size++;
 
     return true;
+}
+
+template <class O>
+std::ostream& operator<<(std::ostream& s, Vector<O>& vector) {
+    vector.printTo(s);
+    return s;
+}
+
+template <class O>
+std::ofstream& operator<<(std::ofstream& s, Vector<O>& vector) {
+    vector.printTo(s);
+    return s;
+}
+
+template <class O>
+std::ostringstream& operator<<(std::ostringstream& s, Vector<O>& vector) {
+    vector.printTo(s);
+    return s;
+}
+
+template <class O>
+std::istream& operator>>(std::istream& s, Vector<O>& vector) {
+    for (int i = 0; i < vector.capacity; i++) {
+        O* element;
+        s >> element;
+        vector.addElement(element);
+    }
+    return s;
+}
+
+template <class O>
+std::ifstream& operator>>(std::ifstream& s, Vector<O>& vector) {
+    for (int i = 0; i < vector.capacity; i++) {
+        O* element;
+        s >> element;
+        vector.addElement(element);
+    }
+    return s;
+}
+
+template <class O>
+std::istringstream& operator>>(std::istringstream& s, Vector<O>& vector) {
+    for (int i = 0; i < vector.capacity; i++) {
+        O* element;
+        s >> element;
+        vector.addElement(element);
+    }
+    return s;
 }
 
 template <class O>
@@ -226,4 +231,3 @@ void Vector<O>::operator++() { if (current < capacity) current++; }
 
 template <class O>
 void Vector<O>::operator--() { if (current > 0)current--; }
-
