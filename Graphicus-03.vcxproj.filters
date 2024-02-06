@@ -38,6 +38,15 @@
     <ClInclude Include="monInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="headers\caneva.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\layer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\vector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="debug\moc_predefs.h.cbt">
