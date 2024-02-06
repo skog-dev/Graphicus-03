@@ -12,6 +12,7 @@
 #define MAININTERFACE_H
 
 #include "graphicusGUI.h"
+#include "headers/caneva.h"
 
 class MainInterface : public GraphicusGUI
 {
