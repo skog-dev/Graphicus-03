@@ -1,7 +1,7 @@
 
 
-#ifndef CANEVAS_H
-#define CANEVAS_H
+#ifndef CANEVA_H
+#define CANEVA_H
 
 #include <iostream>
 #include "layer.h"
@@ -36,8 +36,6 @@ private:
 
 Caneva::Caneva()
 {
-	couches += new Layer<int>();
-	couches += new Layer<int>();
 	couches += new Layer<int>();
 
 	couches[0]->changeState(ACTIVE);
@@ -186,6 +184,5 @@ void Caneva::printTo(ostream &s)
 
 	cout << endl;
 }
-
 
 #endif

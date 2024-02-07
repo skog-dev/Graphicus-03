@@ -1,7 +1,7 @@
 
-#include <iostream>
+#pragma once
 
-#define VECTEUR_H
+#include <iostream>
 
 template <class O>
 class Vector

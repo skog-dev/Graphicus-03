@@ -3,6 +3,7 @@
 * Auteurs: C.-A. Brunet
 * Date: 10 janvier 2024
 * Description: La classe MonInterface teste l'interface usager GraphicusGUI.
+* Modifié par Arthur-Olivier Fortin & Martin Le Gallic
 *
 * Copyright 2024 Département de génie électrique et génie informatique
 *                Université de Sherbrooke  
@@ -12,7 +13,8 @@
 #define MAININTERFACE_H
 
 #include "graphicusGUI.h"
-#include "headers/caneva.h"
+#include "headers/layer.h"
+
 
 class MainInterface : public GraphicusGUI
 {
@@ -53,8 +55,9 @@ public:
 	void formeDerniere();
 
 private:
-	Caneva caneva;
+	Informations infos;
+	Vector<Layer> layers;
 
 };
 
-#endif // MONINTERFACE_H
+#endif

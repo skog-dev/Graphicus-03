@@ -144,10 +144,18 @@
   <ItemGroup>
     <ClCompile Include="Graphicus-03.cpp" />
     <ClCompile Include="mainInterface.cpp" />
+    <ClCompile Include="sources\circle.cpp" />
+    <ClCompile Include="sources\layer.cpp" />
+    <ClCompile Include="sources\rectangle.cpp" />
+    <ClCompile Include="sources\shape.cpp" />
+    <ClCompile Include="sources\square.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="headers\caneva.h" />
+    <ClInclude Include="headers\circle.h" />
     <ClInclude Include="headers\layer.h" />
+    <ClInclude Include="headers\rectangle.h" />
+    <ClInclude Include="headers\shape.h" />
+    <ClInclude Include="headers\square.h" />
     <ClInclude Include="headers\vector.h" />
     <ClInclude Include="mainInterface.h" />
   </ItemGroup>

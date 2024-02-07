@@ -3,6 +3,7 @@
 * Auteurs: C.-A. Brunet
 * Date: 10 janvier 2024
 * Description: Ce programme teste l'interface usager GraphicusGUI.
+* Modifié par Arthur-Olivier Fortin & Martin Le Gallic
 *
 * Copyright 2024 Département de génie électrique et génie informatique
 *                Université de Sherbrooke  
