@@ -62,6 +62,7 @@ public:
 	void updateLayerInfo(Layer* layer);
 
 private:
+	bool isPile = false;
 	Informations infos;
 	Vector<Layer> layers;
 

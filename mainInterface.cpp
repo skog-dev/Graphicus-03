@@ -49,15 +49,15 @@ void MainInterface::reinitialiserCanevas()
 
 bool MainInterface::ouvrirFichier(const char* nom)
 {
-	// TODO : Implement
+	ifstream file(nom);
 
+	cout << 
 
 	return true;
 }
 
 bool MainInterface::sauvegarderFichier(const char* nom)
 {
-	// TODO : Implement
 	ofstream file(nom);
 
 	for (int i = 0; i < layers.getSize(); i++)
@@ -74,7 +74,6 @@ bool MainInterface::sauvegarderFichier(const char* nom)
 
 void MainInterface::coucheAjouter()
 {
-	// TODO : Implement & Test
 	if (infos.coucheActive >= 0) { layers[infos.coucheActive]->changeState(INACTIVE); }
 
 	Layer *new_layer = new Layer();
@@ -136,6 +135,7 @@ void MainInterface::ajouterCercle(int x, int y, int rayon)
 	infos.formeActive = layers[infos.coucheActive]->getSize() - 1;
 	
 	updateShapeInfo(circle);
+	updateLayerInfo(layers[infos.coucheActive]);
 	setInformations(infos);
 
 	updateCaneva();
@@ -156,6 +156,7 @@ void MainInterface::ajouterRectangle(int x, int y, int longueur, int largeur)
 	infos.formeActive = layers[infos.coucheActive]->getSize() - 1;
 
 	updateShapeInfo(rectangle);
+	updateLayerInfo(layers[infos.coucheActive]);
 	setInformations(infos);
 
 	updateCaneva();
@@ -176,6 +177,7 @@ void MainInterface::ajouterCarre(int x, int y, int cote)
 	infos.formeActive = layers[infos.coucheActive]->getSize() - 1;
 	
 	updateShapeInfo(square);
+	updateLayerInfo(layers[infos.coucheActive]);
 	setInformations(infos);
 
 	updateCaneva();
@@ -207,13 +209,17 @@ void MainInterface::retirerForme()
 
 void MainInterface::modePileChange(bool mode)
 {
-	// TODO : Implement
-}
+	if (isPile) message("Le mode pile a ete desactive");
+	else message("Le mode pile a ete active");
+	isPile = !isPile;
 
+	updateCaneva();
+}
 
 
 void MainInterface::couchePremiere()
 {
+	if (isPile)
 	infos.coucheActive = 0;
 	
 	updateLayerInfo(layers[infos.coucheActive]);
@@ -281,10 +287,22 @@ void MainInterface::updateCaneva()
 	effacer();
 
 	ostringstream os;
-	for (int i = 0; i < infos.nbCouches; i++)
+
+	if (!isPile)
 	{
-		os << layers[i]->toString() << endl;
+		for (int i = 0; i < infos.nbCouches; i++)
+		{
+			os << layers[i]->toString() << endl;
+		}
 	}
+	else
+	{
+		for (int i = infos.nbCouches - 1; i >= 0; i--)
+		{
+			os << layers[i]->toString() << endl;
+		}
+	}
+
 
 	cout << os.str() << endl;
 
