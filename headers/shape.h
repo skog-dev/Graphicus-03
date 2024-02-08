@@ -22,6 +22,7 @@ public:
 	void setAncrage(Coordonnee c);
 	virtual double area() = 0;
 	virtual std::string toString() = 0;
+	virtual void stateString(char info[]) = 0;
 
 protected:
 	Coordonnee ancrage;

@@ -9,6 +9,7 @@ public:
     Rectangle(int x = 0, int y = 0, int width = 1, int height = 1);
     ~Rectangle();
     virtual std::string toString() override;
+    virtual void stateString(char info[]) override;
     double area() override;
     bool changeSize(double width, double height);
     double getWidth();

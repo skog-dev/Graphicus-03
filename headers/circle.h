@@ -12,6 +12,7 @@ public:
     ~Circle();
     double area() override;
     std::string toString() override;
+    void stateString(char info[]) override;
     bool changeSize(int rayon);
     int getRayon();
 

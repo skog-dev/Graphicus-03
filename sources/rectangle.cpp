@@ -26,6 +26,13 @@ std::string Rectangle::toString()
     return out.str();
 }
 
+void Rectangle::stateString(char info[])
+{
+    std::ostringstream out;
+    out << "Rectangle aire = " << area() << std::endl;
+    strcpy(info, out.str().c_str());
+}
+
 double Rectangle::area() { return h * w; }
 
 double Rectangle::getWidth() { return w; }

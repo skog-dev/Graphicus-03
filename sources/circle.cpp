@@ -21,3 +21,10 @@ std::string Circle::toString()
     out << "C "<< ancrage.x << " " << ancrage.y << " " << r << std::endl;
     return out.str();
 }
+
+void Circle::stateString(char info[])
+{
+    std::ostringstream out;
+    out << "Cercle aire = " << area() << std::endl;
+    strcpy(info, out.str().c_str());
+}

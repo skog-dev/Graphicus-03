@@ -21,3 +21,10 @@ std::string Square::toString()
     out << "K " << ancrage.x << " " << ancrage.y << " " << w << std::endl;
     return out.str();
 }
+
+void Square::stateString(char info[])
+{
+    std::ostringstream out;
+    out << "Carre aire = " << area() << std::endl;
+    strcpy(info, out.str().c_str());
+}

@@ -23,11 +23,11 @@ using namespace std;
 MainInterface::MainInterface(const char* theName) : GraphicusGUI(theName)
 {
 	reinitialiserCanevas();
-	effacerInformations();
 }
 
 void MainInterface::reinitialiserCanevas()
 {
+	effacerInformations();
 
 	layers.purge();
 
@@ -45,8 +45,6 @@ void MainInterface::reinitialiserCanevas()
 	infos.aireForme = 0;
 
 	coucheAjouter();
-
-	setInformations(infos);
 }
 
 bool MainInterface::ouvrirFichier(const char* nom)
@@ -89,12 +87,12 @@ void MainInterface::coucheAjouter()
 
 	message("Une nouvelle couche a été ajoutée et sélectionnée");
 
+	layers[infos.coucheActive]->getStateStr(infos.etatCouche);
 	setInformations(infos);
 }
 
 void MainInterface::coucheRetirer()
 {
-	// TODO : Implement & Test
 	if (infos.coucheActive < 0)
 	{
 		messageErreur("Aucune couche active à supprimer");
@@ -106,6 +104,7 @@ void MainInterface::coucheRetirer()
 	infos.nbCouches -= 1;
 	infos.coucheActive = -1;
 
+	strcpy(infos.etatCouche, "");
 	setInformations(infos);
 
 	updateCaneva();
@@ -113,34 +112,50 @@ void MainInterface::coucheRetirer()
 
 void MainInterface::coucheTranslater(int deltaX, int deltaY)
 {
-	// TODO : Implement
 	layers[infos.coucheActive]->translate(deltaX, deltaY);
+
+	updateLayerInfo(layers[infos.coucheActive]);
+	updateShapeInfo(layers[infos.coucheActive]->getElement(infos.formeActive));
+	setInformations(infos);
 
 	updateCaneva();
 }
 
 void MainInterface::ajouterCercle(int x, int y, int rayon)
 {
-	// TODO : Implement
-	for (int i = 0; i < layers.getSize(); i++)
+	if (infos.coucheActive < 0)
 	{
-		if (layers[i]->getState() == ACTIVE) { layers[i]->addElement(new Circle(x, y, rayon)); }
-		infos.formeActive = layers[i]->getSize() - 1;
+		messageErreur("Aucune couche active pour l'ajout");
+		return;
 	}
+
+	Shape* circle = new Circle(x, y, rayon);
+	layers[infos.coucheActive]->addElement(circle);
+
+	infos.nbFormesCanevas += 1;
+	infos.formeActive = layers[infos.coucheActive]->getSize() - 1;
+	
+	updateShapeInfo(circle);
 	setInformations(infos);
 
 	updateCaneva();
-
 }
 
 void MainInterface::ajouterRectangle(int x, int y, int longueur, int largeur)
 {
-	// TODO : Implement
-	for (int i = 0; i < layers.getSize(); i++)
+	if (infos.coucheActive < 0)
 	{
-		if (layers[i]->getState() == ACTIVE) { layers[i]->addElement(new Rectangle(x, y, largeur, longueur)); }
-		infos.formeActive = layers[i]->getSize() - 1;
+		messageErreur("Aucune couche active pour l'ajout");
+		return;
 	}
+
+	Shape* rectangle = new Rectangle(x, y, largeur, longueur);
+	layers[infos.coucheActive]->addElement(rectangle);
+
+	infos.nbFormesCanevas += 1;
+	infos.formeActive = layers[infos.coucheActive]->getSize() - 1;
+
+	updateShapeInfo(rectangle);
 	setInformations(infos);
 
 	updateCaneva();
@@ -148,12 +163,19 @@ void MainInterface::ajouterRectangle(int x, int y, int longueur, int largeur)
 
 void MainInterface::ajouterCarre(int x, int y, int cote)
 {
-	// TODO : Implement
+	if (infos.coucheActive < 0)
+	{
+		messageErreur("Aucune couche active pour l'ajout");
+		return;
+	}
 
-	layers[infos.coucheActive]->addElement(new Square(x, y, cote)); 
+	Shape* square = new Square(x, y, cote);
+	layers[infos.coucheActive]->addElement(square); 
+
+	infos.nbFormesCanevas += 1;
 	infos.formeActive = layers[infos.coucheActive]->getSize() - 1;
-
-	layers[infos.coucheActive]->getStateStr(infos.etatCouche);
+	
+	updateShapeInfo(square);
 	setInformations(infos);
 
 	updateCaneva();
@@ -161,14 +183,23 @@ void MainInterface::ajouterCarre(int x, int y, int cote)
 
 void MainInterface::retirerForme()
 {
-	// TODO : Implement
+	if (infos.formeActive < 0)
+	{
+		messageErreur("Aucune forme active a retirer");
+		return;
+	}
+
+	if (infos.coucheActive < 0)
+	{
+		messageErreur("Aucune couche active pour retirer");
+		return;
+	}
 
 	cout << "Deleting selected shape [" << infos.formeActive << "] on layer [" << infos.coucheActive << "]" << endl;
 
 	delete layers[infos.coucheActive]->removeElement(infos.formeActive);
 	infos.formeActive = -1;
 
-	strcpy(infos.etatCouche, "");
 	setInformations(infos);
 
 	updateCaneva();
@@ -183,61 +214,65 @@ void MainInterface::modePileChange(bool mode)
 
 void MainInterface::couchePremiere()
 {
-	// TODO : Implement
 	infos.coucheActive = 0;
-	layers[infos.coucheActive]->getStateStr(infos.etatCouche);
+	
+	updateLayerInfo(layers[infos.coucheActive]);
 	setInformations(infos);
 }
 
 void MainInterface::couchePrecedente()
 {
-	// TODO : Implement
 	if (infos.coucheActive > 0) { infos.coucheActive--; }
-	layers[infos.coucheActive]->getStateStr(infos.etatCouche);
+
+	updateLayerInfo(layers[infos.coucheActive]);
 	setInformations(infos);
 }
 
 void MainInterface::coucheSuivante()
 {
-	// TODO : Implement
 	if (infos.coucheActive < layers.getSize() - 1) { infos.coucheActive++; }
-	layers[infos.coucheActive]->getStateStr(infos.etatCouche);
+
+	updateLayerInfo(layers[infos.coucheActive]);
 	setInformations(infos);
 }
 
 void MainInterface::coucheDerniere()
 {
-	// TODO : Implement
 	infos.coucheActive = layers.getSize() - 1;
-	layers[infos.coucheActive]->getStateStr(infos.etatCouche);
+
+	updateLayerInfo(layers[infos.coucheActive]);
 	setInformations(infos);
 }
 
 void MainInterface::formePremiere()
 {
-	// TODO : Implement
 	infos.formeActive = 0;
+
+	updateShapeInfo(layers[infos.coucheActive]->getElement(infos.formeActive));
 	setInformations(infos);
 }
 
 void MainInterface::formePrecedente()
 {
-	// TODO : Implement
 	if (infos.formeActive > 0) { infos.formeActive--; }
+
+	updateShapeInfo(layers[infos.coucheActive]->getElement(infos.formeActive));
 	setInformations(infos);
 }
 
 void MainInterface::formeSuivante()
 {
-	// TODO : Implement
 	if (infos.formeActive < layers[infos.coucheActive]->getSize() - 1) { infos.formeActive++; }
+
+	updateShapeInfo(layers[infos.coucheActive]->getElement(infos.formeActive));
 	setInformations(infos);
 }
 
 void MainInterface::formeDerniere()
 {
-	// TODO : Implement
 	infos.formeActive = layers[infos.coucheActive]->getSize() - 1;
+
+	updateShapeInfo(layers[infos.coucheActive]->getElement(infos.formeActive));
 	setInformations(infos);
 }
 
@@ -256,5 +291,19 @@ void MainInterface::updateCaneva()
 	dessiner(os.str().c_str());
 }
 
+void MainInterface::updateShapeInfo(Shape *shape)
+{
+	infos.coordX = shape->getAncrage().x;
+	infos.coordY = shape->getAncrage().y;
 
+	infos.aireForme = shape->area();
+	shape->stateString(infos.informationForme);
+}
+
+void MainInterface::updateLayerInfo(Layer* layer)
+{
+	infos.nbFormesCouche = layer->getSize();
+	layer->getStateStr(infos.etatCouche);
+
+}
 

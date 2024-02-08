@@ -58,6 +58,8 @@ public:
 	// Home made stuff
 
 	void updateCaneva();
+	void updateShapeInfo(Shape *shape);
+	void updateLayerInfo(Layer* layer);
 
 private:
 	Informations infos;
