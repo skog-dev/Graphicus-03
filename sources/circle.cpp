@@ -15,7 +15,9 @@ bool Circle::changeSize(int rayon)
     return true;
 }
 
-void Circle::printTo(std::ostream& s)
+std::string Circle::toString()
 {
-    s << ("C %d %d %d, ", ancrage.x, ancrage.y, r);
+    std::ostringstream out;
+    out << "C "<< ancrage.x << " " << ancrage.y << " " << r << std::endl;
+    return out.str();
 }

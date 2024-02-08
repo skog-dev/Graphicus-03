@@ -2,6 +2,8 @@
 #pragma once
 
 #include <iostream>
+#include <string>
+
 #include "vector.h"
 #include "shape.h"
 
@@ -16,10 +18,10 @@ public:
 	virtual ~Layer();
 
 	double totalArea();
-	bool translate(int x2, int y2);
+	bool translate(int x, int y);
 
 	bool reset();
-	void printLayer();
+	std::string toString();
 
 	Shape* getElement(int index);
 	Shape* removeElement(int index);
@@ -27,6 +29,7 @@ public:
 
 	bool changeState(int state);
 	int getState();
+	void getStateStr(char info[]);
 
 	int getSize();
 

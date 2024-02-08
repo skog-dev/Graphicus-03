@@ -19,9 +19,11 @@ bool Rectangle::changeSize(double width, double height)
     return true;
 }
 
-void Rectangle::printTo(std::ostream& s)
+std::string Rectangle::toString()
 {
-    s << ("R %d %d %d %d", ancrage.x, ancrage.y, w, h);
+    std::ostringstream out;
+    out << "R " << ancrage.x << " " << ancrage.y << " " << w << " " << h << std::endl;
+    return out.str();
 }
 
 double Rectangle::area() { return h * w; }

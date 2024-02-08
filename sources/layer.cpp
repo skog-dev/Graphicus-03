@@ -1,4 +1,5 @@
 
+#include <sstream>
 #include "headers/layer.h"
 
 Layer::Layer()
@@ -6,7 +7,7 @@ Layer::Layer()
 	state = INITIALISE;
 }
 
-Layer::~Layer() {}
+Layer::~Layer() { vector.purge(); }
 
 double Layer::totalArea()
 {
@@ -23,15 +24,11 @@ double Layer::totalArea()
 	return totalArea;
 }
 
-bool Layer::translate(int x2, int y2)
+bool Layer::translate(int x, int y)
 {
 	for (int i = 0; i < vector.getSize(); i++)
 	{
-		if (vector[i] != nullptr)
-		{
-			// TODO: Fix this
-			// vector[i]->translate(x2, y2);
-		}
+		if (vector[i] != nullptr) { vector[i]->translate(x, y); }
 	}
 
 	return true;
@@ -47,24 +44,57 @@ bool Layer::reset()
 }
 
 
-void Layer::printLayer()
+std::string Layer::toString()
 {
-	if (vector.isEmpty()) std::cout << "Couche: vide" << std::endl;
+	std::ostringstream out;
 
-	for (int i = 0; i < vector.getCapacity(); i++)
+	out << "L ";
+
+	switch (getState())
 	{
-		if (vector[i] != nullptr)
-		{
-			std::cout << "Element [" << i << "] : ";
-			vector[i]->printTo(std::cout);
-			std::cout << std::endl;
-		}
-		else std::cout << "Element [" << i << "] : vide" << std::endl;
+	case 0:
+		out << "x" << std::endl;
+		break;
+
+	case 1:
+		out << "a" << std::endl;
+		break;
+
+	default:
+		out << "i" << std::endl;
+		break;
 	}
+
+	for (int i = 0; i < vector.getSize(); i++)
+	{
+		if (vector[i] != nullptr) { out << vector[i]->toString(); }
+	}
+
+	return out.str();
 }
 
 
 int Layer::getState() { return state; }
+
+void Layer::getStateStr(char info[])
+{
+
+	switch (getState())
+	{
+	case 0:
+		strcpy(info, "Initialisee");
+		break;
+
+	case 1:
+		strcpy(info, "Active");
+		break;
+
+	default:
+		strcpy(info, "Inactive");
+		break;
+	}
+
+}
 
 Shape* Layer::getElement(int index) { return vector[index]; }
 

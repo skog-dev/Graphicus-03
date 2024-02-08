@@ -11,7 +11,7 @@ public:
     Circle(int x1 = 0, int y1 = 0, int rayon = 1);
     ~Circle();
     double area() override;
-    void printTo(std::ostream &s) override;
+    std::string toString() override;
     bool changeSize(int rayon);
     int getRayon();
 

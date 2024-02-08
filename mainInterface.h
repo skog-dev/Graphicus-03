@@ -54,6 +54,11 @@ public:
 	void formeSuivante();
 	void formeDerniere();
 
+	
+	// Home made stuff
+
+	void updateCaneva();
+
 private:
 	Informations infos;
 	Vector<Layer> layers;

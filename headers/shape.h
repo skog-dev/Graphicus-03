@@ -2,6 +2,9 @@
 #pragma once
 
 #include <iostream>
+#include <sstream>
+#include <string>
+
 
 struct Coordonnee
 {
@@ -18,7 +21,7 @@ public:
 	Coordonnee getAncrage();
 	void setAncrage(Coordonnee c);
 	virtual double area() = 0;
-	virtual void printTo(std::ostream &s) = 0;
+	virtual std::string toString() = 0;
 
 protected:
 	Coordonnee ancrage;

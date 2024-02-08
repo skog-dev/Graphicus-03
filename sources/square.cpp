@@ -15,7 +15,9 @@ bool Square::changeSize(double side)
     return true;
 }
 
-void Square::printTo(std::ostream& s)
+std::string Square::toString()
 {
-    s << ("K %d %d %d", ancrage.x, ancrage.y, w);
+    std::ostringstream out;
+    out << "K " << ancrage.x << " " << ancrage.y << " " << w << std::endl;
+    return out.str();
 }

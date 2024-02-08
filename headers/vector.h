@@ -7,7 +7,7 @@ template <class O>
 class Vector
 {
 public:
-    Vector(int c = 2);
+    Vector(int c = 1);
     ~Vector();
 
     int getCapacity();
@@ -50,7 +50,8 @@ Vector<O>::Vector(int c)
 
 template <class O>
 Vector<O>::~Vector() {
-    for (int i = 0; i < capacity; i++) { delete list[i]; }
+
+    for (int i = 0; i < size; i++) { delete list[i]; }
     delete list;
 }
 
@@ -85,9 +86,7 @@ template <class O>
 bool Vector<O>::isEmpty()
 {
     for (int i = 0; i < capacity; i++) {
-
         if (list[i] != nullptr) { return false; }
-
     }
 
     return true;
