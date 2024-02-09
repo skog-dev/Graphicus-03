@@ -12,6 +12,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <stdio.h>
 
 #include "mainInterface.h"
 
@@ -23,6 +24,7 @@ using namespace std;
 MainInterface::MainInterface(const char* theName) : GraphicusGUI(theName)
 {
 	reinitialiserCanevas();
+	coucheAjouter();
 }
 
 void MainInterface::reinitialiserCanevas()
@@ -44,14 +46,65 @@ void MainInterface::reinitialiserCanevas()
 	infos.coordY = 0;
 	infos.aireForme = 0;
 
-	coucheAjouter();
+	setInformations(infos);
+
+	updateCaneva();
 }
 
 bool MainInterface::ouvrirFichier(const char* nom)
 {
 	ifstream file(nom);
 
-	cout << 
+	std::string in;
+	char first;
+
+	reinitialiserCanevas();
+
+	while (file)
+	{
+		first = ' ';
+		file >> first;
+
+		cout << "first char is " << first << endl;
+
+		switch (first)
+		{
+
+		case 'L':
+			coucheAjouter();
+			break;
+
+		case 'K':
+		{
+			int x, y, s;
+			file >> x >> y >> s;
+			ajouterCarre(x, y, s);
+		}
+			break;
+
+		case 'R':
+		{
+			int x, y, w, h;
+			file >> x >> y >> w >> h;
+			ajouterRectangle(x, y, w, h);
+		}
+			break;
+
+		case 'C':
+		{
+			int x, y, r;
+			file >> x >> y >> r;
+			ajouterCercle(x, y, r);
+		}
+			break;
+
+		default:
+			break;
+		}
+	}
+
+	setInformations(infos);
+	updateCaneva();
 
 	return true;
 }
@@ -209,9 +262,9 @@ void MainInterface::retirerForme()
 
 void MainInterface::modePileChange(bool mode)
 {
-	if (isPile) message("Le mode pile a ete desactive");
+	if (mode) message("Le mode pile a ete desactive");
 	else message("Le mode pile a ete active");
-	isPile = !isPile;
+	isPile = mode;
 
 	updateCaneva();
 }
